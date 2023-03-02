@@ -45,7 +45,6 @@ def here(*args, root_indicators=None):
         project's root directory.
 
     """
-    import pdb; pdb.set_trace()
     heredir = find_root(root_indicators=root_indicators)
     
     for arg in args:
@@ -107,7 +106,6 @@ def find_root(path = None, root_indicators=None):
     else:
         raise RootIndicatorException(f"Unreocgnizesd root indicator {root_indicators}")
     if path is None:
-        import pdb; pdb.set_trace()
         return find_root(Path.cwd(), root_indicators=root_indicators)
     else:
         for root_indicator in root_indicators:
