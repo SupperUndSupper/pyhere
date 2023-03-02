@@ -106,7 +106,7 @@ def find_root(path = None, root_indicators=None):
     else:
         raise RootIndicatorException(f"Unrecgnizesd root indicator {root_indicators}")
     if path is None:
-        return find_root(Path.cwd())
+        return find_root(Path.cwd(), root_indicators=root_indicators)
     else:
         for root_indicator in root_indicators:
             if path.joinpath(root_indicator).exists():
