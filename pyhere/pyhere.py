@@ -104,7 +104,7 @@ def find_root(path = None, root_indicators=None):
         except AssertionError as exc:
             raise RootIndicatorException("Unrecognized root indicator sequence") from exc
     else:
-        RootIndicatorException(f"Unrecgnizesd root indicator {root_indicators}"))
+        raise RootIndicatorException(f"Unrecgnizesd root indicator {root_indicators}")
     if path is None:
         return find_root(Path.cwd())
     else:
