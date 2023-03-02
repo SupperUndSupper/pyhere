@@ -45,6 +45,7 @@ def here(*args, root_indicators=None):
         project's root directory.
 
     """
+    import pdb; pdb.set_trace()
     heredir = find_root(root_indicators=root_indicators)
     
     for arg in args:
@@ -104,8 +105,9 @@ def find_root(path = None, root_indicators=None):
         except AssertionError as exc:
             raise RootIndicatorException("Unrecognized root indicator sequence") from exc
     else:
-        raise RootIndicatorException(f"Unrecgnizesd root indicator {root_indicators}")
+        raise RootIndicatorException(f"Unreocgnizesd root indicator {root_indicators}")
     if path is None:
+        import pdb; pdb.set_trace()
         return find_root(Path.cwd(), root_indicators=root_indicators)
     else:
         for root_indicator in root_indicators:
@@ -116,7 +118,7 @@ def find_root(path = None, root_indicators=None):
         
         # if we've hit the system root
         if (next_path.resolve() != path.resolve()):
-            return find_root(next_path)
+            return find_root(next_path, root_indicators=root_indicator)
         else:
             warnings.warn(
                 "No project indicator found - returning root system directory"
