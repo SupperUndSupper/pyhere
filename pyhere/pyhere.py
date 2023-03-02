@@ -24,7 +24,7 @@ DEFAULT_ROOT_INDICATORS = [
     ".ropeproject" # rope
 ]
 
-def here(*args):
+def here(*args, root_indicators=None):
     """
     Finds a project's root directory and then iteratively appends all passed
     arguments to it, construction a path relative to the root directory.
@@ -45,7 +45,7 @@ def here(*args):
         project's root directory.
 
     """
-    heredir = find_root()
+    heredir = find_root(root_indicators=root_indicators)
     
     for arg in args:
         heredir = heredir / arg
