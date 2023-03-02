@@ -9,7 +9,10 @@ else:
 
 import warnings
 
-root_indicators = [
+class RootIndicatorException(Exception):
+    pass
+
+DEFAULT_ROOT_INDICATORS = [
     ".here",
     "requirements.txt",
     "setup.py",
@@ -30,6 +33,10 @@ def here(*args):
     ----------
     *args : Path or str
         The path additions to be attached to the root directory.
+    **kwargs: 
+        root_indicators: list of strings of possible root indicators. If not set,
+        DEFAULT_ROOT_INDICATORS are used.
+
 
     Returns
     -------
@@ -65,7 +72,7 @@ def set_here(wd = None):
     wd.joinpath(".here").touch()
         
     
-def find_root(path = None):
+def find_root(path = None, root_indicators=None):
     """
     Find's the root of a python project.
     
@@ -77,6 +84,8 @@ def find_root(path = None):
     path : Path, str or None
         The starting directory to begin the search. If none is set, uses
         Path.cwd()
+    root_indicators: str or list of string giving root indicators. If None,
+        use DEFAULT_ROOT_INDICATORS
 
     Returns
     -------
@@ -84,6 +93,18 @@ def find_root(path = None):
         Either the path where a root_indicator was found or the system root.
 
     """
+    if root_indicators is None:
+        root_indicators = DEFAULT_ROOT_INDICATORS
+    elif isinstance(root_indicators, str):
+        root_indicators = [root_indicators]
+    elif isinstance(root_indicators,(list, tuple, set)):
+        try:
+            assert len(root_indicators) > 0
+            assert all([isinstance(root,str) for root in root_indicators])
+        except AssertionError as exc:
+            raise RootIndicatorException("Unrecognized root indicator sequence") from exc
+    else:
+        RootIndicatorException(f"Unrecgnizesd root indicator {root_indicators}"))
     if path is None:
         return find_root(Path.cwd())
     else:
