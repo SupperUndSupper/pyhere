@@ -116,7 +116,7 @@ def find_root(path = None, root_indicators=None):
         
         # if we've hit the system root
         if (next_path.resolve() != path.resolve()):
-            return find_root(next_path, root_indicators=root_indicator)
+            return find_root(next_path, root_indicators=root_indicators)
         else:
             warnings.warn(
                 "No project indicator found - returning root system directory"
